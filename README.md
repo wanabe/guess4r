@@ -23,6 +23,8 @@ ruby >= 1.9.X と libguess が必要です。
     confused_string.encoding                    # => #<Encoding:Windows-31J>
     guess_open("unknown") {|f| f.read.encoding} # => #<Encoding:EUC-JP>
 
+guess_open は判別のために open -> close -> 再度 open という処理を行いますので注意してください。
+
 ライセンス
 ----------
 
