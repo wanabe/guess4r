@@ -6,5 +6,8 @@ ary = ["sjis", "utf-8", "euc-jp"].map do |coding|
 end
 
 ary.each do |str|
-  str.guess_encoding
+  p str.guess.encoding
+  p str.encoding
+  str.guess!
+  p str.encoding
 end
