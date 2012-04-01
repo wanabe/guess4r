@@ -3,11 +3,20 @@
 #include <ruby/encoding.h>
 #include <libguess/libguess.h>
 
+#ifndef GUESS_REGION_DEFAULT
+#define GUESS_REGION_DEFAULT GUESS_REGION_JP
+#endif
+
+VALUE guess4r_enc__guess_region(VALUE klass) {
+  return rb_ivar_get(klass, rb_intern("guess_region"));
+}
+
 static rb_encoding* _guess_encoding(VALUE str) {
   rb_encoding *enc;
   const char *encname;
 
-  encname = libguess_determine_encoding(RSTRING_PTR(str), RSTRING_LEN(str), "Japanese");
+  encname = libguess_determine_encoding(RSTRING_PTR(str), RSTRING_LEN(str),
+                                        RSTRING_PTR(guess4r_enc__guess_region(rb_cEncoding)));
   return rb_enc_find(encname);
 }
 
@@ -48,9 +57,16 @@ static VALUE guess4r_f__guess_open(int argc, VALUE *argv) {
   return rb_funcall_passing_block(rb_mKernel, rb_intern("open"), argc, args);
 }
 
+VALUE guess4r_enc__guess_region_set(VALUE klass, VALUE str) {
+  return rb_str_replace(guess4r_enc__guess_region(klass), str);
+}
+
 void Init_guess() {
   rb_define_method(rb_cString, "guess_encoding", guess4r_str__guess_encoding, 0);
   rb_define_method(rb_cString, "guess!", guess4r_str__guess_bang, 0);
   rb_define_method(rb_cString, "guess", guess4r_str__guess, 0);
   rb_define_global_function("guess_open", guess4r_f__guess_open, -1);
+  rb_ivar_set(rb_cEncoding, rb_intern("guess_region"), rb_str_new2(GUESS_REGION_DEFAULT));
+  rb_define_singleton_method(rb_cEncoding, "guess_region", guess4r_enc__guess_region, 0);
+  rb_define_singleton_method(rb_cEncoding, "guess_region=", guess4r_enc__guess_region_set, 1);
 }
