@@ -1,6 +1,6 @@
 ﻿# coding:utf-8
 require "test/unit"
-require_relative "guess"
+require "guess"
 
 class TestGuess < Test::Unit::TestCase
   def setup
