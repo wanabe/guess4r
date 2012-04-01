@@ -1,8 +1,7 @@
 guess4r (仮）
 =============
 
-guess4r は、libguess を Ruby から扱うことを目的にしたライブラリ（になる予定）です。
-まだ開発中です。
+guess4r は、libguess を Ruby から扱うことを目的にしたライブラリ（のつもり）です。
 
 ビルド・インストール
 --------------------
@@ -17,11 +16,12 @@ ruby >= 1.9.X と libguess が必要です。
 使い方
 ------
 
-    confused_string.encoding       # => #<Encoding:ASCII-8BIT>
-    confused_string.guess_encoding # => #<Encoding:Windows-31J>
-    confused_string.guess.encoding # => #<Encoding:Windows-31J>
-    confused_string.guess!         # => "\x{8356}\x{8374}\x{8367}JIS\x{95B6}\x{8E9A}\x{97F1}"
-    confused_string.encoding       # => #<Encoding:Windows-31J>
+    confused_string.encoding                    # => #<Encoding:ASCII-8BIT>
+    confused_string.guess_encoding              # => #<Encoding:Windows-31J>
+    confused_string.guess.encoding              # => #<Encoding:Windows-31J>
+    confused_string.guess!                      # => "\x{8356}\x{8374}\x{8367}JIS\x{95B6}\x{8E9A}\x{97F1}"
+    confused_string.encoding                    # => #<Encoding:Windows-31J>
+    guess_open("unknown") {|f| f.read.encoding} # => #<Encoding:EUC-JP>
 
 ライセンス
 ----------

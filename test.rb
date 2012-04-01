@@ -26,4 +26,32 @@ class TestGuess < Test::Unit::TestCase
     assert_equal(@codings, guessed_table.map {|str| str.encoding})
     assert(@strings.all? {|str| str.encoding == Encoding::ASCII_8BIT})
   end
+
+  def test_io_guess_open
+    default_external = Encoding.default_external
+    Encoding.default_external = Encoding::ASCII_8BIT
+
+    begin
+      io = nil
+      open("README.md") do |f|
+        assert_equal(Encoding::ASCII_8BIT, f.external_encoding)
+      end
+      guess_open("README.md") do |f|
+        io = f
+        assert_equal(Encoding::UTF_8, f.external_encoding)
+      end
+      assert(io.closed?)
+      guess_open("README.md", :encoding => Encoding::US_ASCII) do |f|
+        assert_equal(Encoding::UTF_8, f.external_encoding)
+      end
+      guess_open("README.md", :external_encoding => Encoding::US_ASCII) do |f|
+        assert_equal(Encoding::UTF_8, f.external_encoding)
+      end
+      assert_raise(ArgumentError) do
+        guess_open("README.md", "r:SJIS") {}
+      end
+    ensure
+      Encoding.default_external = default_external
+    end
+  end
 end
