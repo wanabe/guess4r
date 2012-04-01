@@ -3,3 +3,4 @@ Makefile
 *.log
 *.o
 *.so
+pkg/
