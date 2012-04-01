@@ -5,7 +5,7 @@
 
 static rb_encoding* _guess_encoding(VALUE str) {
   rb_encoding *enc;
-  char *encname;
+  const char *encname;
 
   encname = libguess_determine_encoding(RSTRING_PTR(str), RSTRING_LEN(str), "Japanese");
   return rb_enc_find(encname);
@@ -20,7 +20,7 @@ static VALUE guess4r_str__guess_bang(VALUE str) {
 }
 
 static VALUE guess4r_str__guess(VALUE str) {
-  return string__guess_bang(rb_str_dup(str));
+  return guess4r_str__guess_bang(rb_str_dup(str));
 }
 
 void Init_guess() {
