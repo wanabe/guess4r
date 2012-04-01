@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "guess4r"
   gem.require_paths = ["ext"]
-  gem.version       = "0.0.1.20120401"
+  gem.version       = "0.0.1.20120401.1"
   gem.extensions << "ext/extconf.rb"
 
 end
